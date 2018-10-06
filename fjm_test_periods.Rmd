@@ -1,0 +1,778 @@
+---
+title: "Fundacion Juan March - Period Testing"
+author: "Diego Enriquez"
+date: "4/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, warning=FALSE}
+suppressMessages(library(data.table))
+suppressMessages(library(lubridate))
+suppressMessages(library(ggplot2))
+suppressMessages(library(grid))
+
+# Functions ==================================================================================================================================
+source("fjm_func.R")
+```
+
+
+```{r echo=FALSE, warning=FALSE}
+fjm_visitors <- readVisitorData()
+fjm_visitors <- fjm_visitors[Date >= "2016-01-01"]
+fjm_visitors[is.na(visitors)]$visitors = 0
+```
+
+```{r echo=FALSE, warning=FALSE}
+ga_allws_nochn_all <- readQueryExplorerData("data/ga/fjm_allws_nochn_all.tsv", c("Date"))
+ga_allws_nochn_os <- readQueryExplorerData("data/ga/fjm_allws_nochn_os.tsv", c("Date"))
+ga_allws_nochn_es <- readQueryExplorerData("data/ga/fjm_allws_nochn_es.tsv", c("Date"))
+ga_allws_nochn_do <- readQueryExplorerData("data/ga/fjm_allws_nochn_do.tsv", c("Date"))
+ga_allws_nochn_lo <- readQueryExplorerData("data/ga/fjm_allws_nochn_lo.tsv", c("Date"))
+
+ga_allws_chn_all <- readQueryExplorerData("data/ga/fjm_allws_chn_all.tsv", c("Date", "Channel"))
+ga_allws_chn_os <- readQueryExplorerData("data/ga/fjm_allws_chn_os.tsv", c("Date", "Channel"))
+ga_allws_chn_es <- readQueryExplorerData("data/ga/fjm_allws_chn_es.tsv", c("Date", "Channel"))
+ga_allws_chn_do <- readQueryExplorerData("data/ga/fjm_allws_chn_do.tsv", c("Date", "Channel"))
+ga_allws_chn_lo <- readQueryExplorerData("data/ga/fjm_allws_chn_lo.tsv", c("Date", "Channel"))
+
+ga_arte_nochn_all <- readQueryExplorerData("data/ga/fjm_arte_nochn_all.tsv", c("Date"))
+ga_arte_nochn_os <- readQueryExplorerData("data/ga/fjm_arte_nochn_os.tsv", c("Date"))
+ga_arte_nochn_es <- readQueryExplorerData("data/ga/fjm_arte_nochn_es.tsv", c("Date"))
+ga_arte_nochn_do <- readQueryExplorerData("data/ga/fjm_arte_nochn_do.tsv", c("Date"))
+ga_arte_nochn_lo <- readQueryExplorerData("data/ga/fjm_arte_nochn_lo.tsv", c("Date"))
+
+ga_arte_chn_all <- readQueryExplorerData("data/ga/fjm_arte_chn_all.tsv", c("Date", "Channel"))
+ga_arte_chn_os <- readQueryExplorerData("data/ga/fjm_arte_chn_os.tsv", c("Date", "Channel"))
+ga_arte_chn_es <- readQueryExplorerData("data/ga/fjm_arte_chn_es.tsv", c("Date", "Channel"))
+ga_arte_chn_do <- readQueryExplorerData("data/ga/fjm_arte_chn_do.tsv", c("Date", "Channel"))
+ga_arte_chn_lo <- readQueryExplorerData("data/ga/fjm_arte_chn_lo.tsv", c("Date", "Channel"))
+
+ga_bibliotecas_nochn_all <- readQueryExplorerData("data/ga/fjm_bibliotecas_nochn_all.tsv", c("Date"))
+ga_bibliotecas_nochn_os <- readQueryExplorerData("data/ga/fjm_bibliotecas_nochn_os.tsv", c("Date"))
+ga_bibliotecas_nochn_es <- readQueryExplorerData("data/ga/fjm_bibliotecas_nochn_es.tsv", c("Date"))
+ga_bibliotecas_nochn_do <- readQueryExplorerData("data/ga/fjm_bibliotecas_nochn_do.tsv", c("Date"))
+ga_bibliotecas_nochn_lo <- readQueryExplorerData("data/ga/fjm_bibliotecas_nochn_lo.tsv", c("Date"))
+
+ga_bibliotecas_chn_all <- readQueryExplorerData("data/ga/fjm_bibliotecas_chn_all.tsv", c("Date", "Channel"))
+ga_bibliotecas_chn_os <- readQueryExplorerData("data/ga/fjm_bibliotecas_chn_os.tsv", c("Date", "Channel"))
+ga_bibliotecas_chn_es <- readQueryExplorerData("data/ga/fjm_bibliotecas_chn_es.tsv", c("Date", "Channel"))
+ga_bibliotecas_chn_do <- readQueryExplorerData("data/ga/fjm_bibliotecas_chn_do.tsv", c("Date", "Channel"))
+ga_bibliotecas_chn_lo <- readQueryExplorerData("data/ga/fjm_bibliotecas_chn_lo.tsv", c("Date", "Channel"))
+
+ga_conferencias_nochn_all <- readQueryExplorerData("data/ga/fjm_conferencias_nochn_all.tsv", c("Date"))
+ga_conferencias_nochn_os <- readQueryExplorerData("data/ga/fjm_conferencias_nochn_os.tsv", c("Date"))
+ga_conferencias_nochn_es <- readQueryExplorerData("data/ga/fjm_conferencias_nochn_es.tsv", c("Date"))
+ga_conferencias_nochn_do <- readQueryExplorerData("data/ga/fjm_conferencias_nochn_do.tsv", c("Date"))
+ga_conferencias_nochn_lo <- readQueryExplorerData("data/ga/fjm_conferencias_nochn_lo.tsv", c("Date"))
+
+ga_conferencias_chn_all <- readQueryExplorerData("data/ga/fjm_conferencias_chn_all.tsv", c("Date", "Channel"))
+ga_conferencias_chn_os <- readQueryExplorerData("data/ga/fjm_conferencias_chn_os.tsv", c("Date", "Channel"))
+ga_conferencias_chn_es <- readQueryExplorerData("data/ga/fjm_conferencias_chn_es.tsv", c("Date", "Channel"))
+ga_conferencias_chn_do <- readQueryExplorerData("data/ga/fjm_conferencias_chn_do.tsv", c("Date", "Channel"))
+ga_conferencias_chn_lo <- readQueryExplorerData("data/ga/fjm_conferencias_chn_lo.tsv", c("Date", "Channel"))
+
+ga_engws_nochn_all <- readQueryExplorerData("data/ga/fjm_engws_nochn_all.tsv", c("Date"))
+ga_engws_nochn_os <- readQueryExplorerData("data/ga/fjm_engws_nochn_os.tsv", c("Date"))
+ga_engws_nochn_es <- readQueryExplorerData("data/ga/fjm_engws_nochn_es.tsv", c("Date"))
+ga_engws_nochn_do <- readQueryExplorerData("data/ga/fjm_engws_nochn_do.tsv", c("Date"))
+ga_engws_nochn_lo <- readQueryExplorerData("data/ga/fjm_engws_nochn_lo.tsv", c("Date"))
+
+ga_engws_chn_all <- readQueryExplorerData("data/ga/fjm_engws_chn_all.tsv", c("Date", "Channel"))
+ga_engws_chn_os <- readQueryExplorerData("data/ga/fjm_engws_chn_os.tsv", c("Date", "Channel"))
+ga_engws_chn_es <- readQueryExplorerData("data/ga/fjm_engws_chn_es.tsv", c("Date", "Channel"))
+ga_engws_chn_do <- readQueryExplorerData("data/ga/fjm_engws_chn_do.tsv", c("Date", "Channel"))
+ga_engws_chn_lo <- readQueryExplorerData("data/ga/fjm_engws_chn_lo.tsv", c("Date", "Channel"))
+
+ga_musica_nochn_all <- readQueryExplorerData("data/ga/fjm_musica_nochn_all.tsv", c("Date"))
+ga_musica_nochn_os <- readQueryExplorerData("data/ga/fjm_musica_nochn_os.tsv", c("Date"))
+ga_musica_nochn_es <- readQueryExplorerData("data/ga/fjm_musica_nochn_es.tsv", c("Date"))
+ga_musica_nochn_do <- readQueryExplorerData("data/ga/fjm_musica_nochn_do.tsv", c("Date"))
+ga_musica_nochn_lo <- readQueryExplorerData("data/ga/fjm_musica_nochn_lo.tsv", c("Date"))
+
+ga_musica_chn_all <- readQueryExplorerData("data/ga/fjm_musica_chn_all.tsv", c("Date", "Channel"))
+ga_musica_chn_os <- readQueryExplorerData("data/ga/fjm_musica_chn_os.tsv", c("Date", "Channel"))
+ga_musica_chn_es <- readQueryExplorerData("data/ga/fjm_musica_chn_es.tsv", c("Date", "Channel"))
+ga_musica_chn_do <- readQueryExplorerData("data/ga/fjm_musica_chn_do.tsv", c("Date", "Channel"))
+ga_musica_chn_lo <- readQueryExplorerData("data/ga/fjm_musica_chn_lo.tsv", c("Date", "Channel"))
+
+daysinfo <- data.table(Date = seq(as.Date("2017-07-01"), as.Date("2018-07-12"), by = "day"))
+daysinfo$weekNum <- wday(daysinfo$Date, week_start = 1)
+daysinfo$isFirstSunday <- wday(daysinfo$Date, week_start = 1) == 7 & day(daysinfo$Date) <= 7
+
+# teststart <- "2017-07-01"  # Values for Full Data
+# testend <- "2018-07-12" 
+# maxlag <- 31
+# visitordata <- fleet_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
+
+# Common variables
+maxlag <- 15
+metric <- "Sessions"
+metricidx <- 3
+#  1 Users
+#  2 UsersOld
+#  3 Sessions
+#  4 SessionsNew
+#  5 SessionsOld
+#  6 SessionsBounce
+#  7 SessionsNoBounce
+#  8 AvgSessionDuration
+#  9 Pageviews
+# 10 PageviewsSession
+# 11 UniquePageviews
+# 12 AvgTimeOnPage
+```
+
+# By Year
+
+### 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-08-04"
+testend <- "2016-12-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-01-01"
+testend <- "2017-12-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 1)
+```
+
+### 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-01-01"
+testend <- "2018-06-24"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+# By Season
+
+### Autumn 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-08-17"
+testend <- "2016-11-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 8)
+```
+
+### Winter 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-11-16"
+testend <- "2017-02-28"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 1)
+```
+
+### Spring 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-02-14"
+testend <- "2017-05-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### Summer 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-05-17"
+testend <- "2017-08-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 6)
+```
+
+### Autumn 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-08-17"
+testend <- "2017-11-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 2)
+```
+
+### Winter 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-11-16"
+testend <- "2018-02-28"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### Spring 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-02-14"
+testend <- "2018-05-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### Summer 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-05-17"
+testend <- "2018-06-24"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 7)
+```
+
+
+
+
+# By Holidays
+
+Source: http://blog.activityhero.com/san-diego-unified-school-calendar/#sthash.n2hzZ9EV.dpbs
+
+### Summer break 2016
+
+
+### Christmas break 2016
+
+
+
+### Easter break 2017
+
+
+
+### Summer break 2017
+
+
+### Christmas break 2017
+
+
+### Easter break 2018
+
+
+
+# By Month
+
+### August 2016
+
+Visitor data has no data
+```{r echo=FALSE, fig.width=10}
+# teststart <- "2016-08-19"
+# testend <- "2016-08-31"
+# 
+# visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+# gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# # getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# # 
+# plotLagComparisonv2(trendValues(gamericdata),
+#                     trendValues(visitordata),
+#                     plotstart = teststart,
+#                     plotend = testend,
+#                     metric = metric,
+#                     dlag = 0)
+```
+
+### September 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-08-17"
+testend <- "2016-09-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 8)
+```
+
+### October 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-09-16"
+testend <- "2016-10-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 3)
+```
+
+### November 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-10-17"
+testend <- "2016-11-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 11)
+```
+
+### December 2016
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-11-16"
+testend <- "2016-12-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### January 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2016-12-17"
+testend <- "2017-01-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 4)
+```
+
+### February 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-01-17"
+testend <- "2017-02-28"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### March 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-02-14"
+testend <- "2017-03-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 9)
+```
+
+### April 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-03-17"
+testend <- "2017-04-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### May 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-04-16"
+testend <- "2017-05-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 15)
+```
+
+### Jun 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-05-17"
+testend <- "2017-06-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 5)
+```
+
+
+### July 2017
+
+Visitor data has no data
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-06-16"
+testend <- "2017-07-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# 
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### August 2017
+
+Visitor data has no data
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-07-17"
+testend <- "2017-08-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# 
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### September 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-08-17"
+testend <- "2017-09-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 3)
+```
+
+### October 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-09-16"
+testend <- "2017-10-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 2)
+```
+
+### November 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-10-17"
+testend <- "2017-11-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### December 2017
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-11-16"
+testend <- "2017-12-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 1)
+```
+
+### January 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2017-12-17"
+testend <- "2018-01-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### February 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-01-17"
+testend <- "2018-02-28"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### March 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-02-14"
+testend <- "2018-03-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 0)
+```
+
+### April 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-03-17"
+testend <- "2018-04-30"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 9)
+```
+
+### May 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-04-16"
+testend <- "2018-05-31"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 15)
+```
+
+### June 2018
+
+```{r echo=FALSE, fig.width=10}
+teststart <- "2018-05-17"
+testend <- "2018-06-24"
+
+visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
+                    plotstart = teststart,
+                    plotend = testend,
+                    metric = metric,
+                    dlag = 7)
+```
+

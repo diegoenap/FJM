@@ -1,0 +1,105 @@
+---
+title: "Fundacion Juan March - Google Analytics Metrics"
+author: "Diego Enriquez"
+date: "4/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=FALSE, warning=FALSE}
+suppressMessages(library(data.table))
+suppressMessages(library(lubridate))
+suppressMessages(library(ggplot2))
+suppressMessages(library(grid))
+
+# Functions ==================================================================================================================================
+source("fjm_func.R")
+```
+
+# GA metrics Overview
+```{r echo=FALSE, warning=FALSE}
+ga_allws_nochn_all <- readQueryExplorerData("data/ga/fjm_allws_nochn_all.tsv", c("Date"))
+ga_allws_nochn_os <- readQueryExplorerData("data/ga/fjm_allws_nochn_os.tsv", c("Date"))
+ga_allws_nochn_es <- readQueryExplorerData("data/ga/fjm_allws_nochn_es.tsv", c("Date"))
+ga_allws_nochn_do <- readQueryExplorerData("data/ga/fjm_allws_nochn_do.tsv", c("Date"))
+ga_allws_nochn_lo <- readQueryExplorerData("data/ga/fjm_allws_nochn_lo.tsv", c("Date"))
+
+ga_allws_chn_all <- readQueryExplorerData("data/ga/fjm_allws_chn_all.tsv", c("Date", "Channel"))
+ga_allws_chn_os <- readQueryExplorerData("data/ga/fjm_allws_chn_os.tsv", c("Date", "Channel"))
+ga_allws_chn_es <- readQueryExplorerData("data/ga/fjm_allws_chn_es.tsv", c("Date", "Channel"))
+ga_allws_chn_do <- readQueryExplorerData("data/ga/fjm_allws_chn_do.tsv", c("Date", "Channel"))
+ga_allws_chn_lo <- readQueryExplorerData("data/ga/fjm_allws_chn_lo.tsv", c("Date", "Channel"))
+
+ga_engws_chn_es <- readQueryExplorerData("data/ga/fjm_engws_chn_es.tsv", c("Date", "Channel"))
+
+daysinfo <- data.table(Date = seq(as.Date("2016-01-01"), as.Date("2018-09-30"), by = "day"))
+daysinfo$weekNum <- wday(daysinfo$Date, week_start = 1)
+daysinfo$monthNum <- mday(daysinfo$Date)
+daysinfo$isFirstSunday <- wday(daysinfo$Date, week_start = 1) == 7 & day(daysinfo$Date) <= 7
+
+lim <- c("2016-01-01", "2018-09-30")
+```
+
+From June to September there is a decrease trend in website activity.
+
+```{r echo=FALSE, fig.width=10}
+ggplot(ga_allws_nochn_all, aes(Date, Sessions)) +
+  geom_vline(xintercept = daysinfo[monthNum == 1, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(ga_allws_nochn_all), aes(Date, Sessions), size = 0.5, col = "blue") +
+  theme_bw() 
+  #coord_cartesian(xlim = as.Date(c("2016-02-01", "2016-03-31")), ylim = c(0, 1700))
+```
+
+Weekly fequency with low activity on weekends
+
+```{r echo=FALSE, fig.width=10}
+ggplot(ga_allws_nochn_all, aes(Date, Sessions)) +
+  geom_vline(xintercept = daysinfo[weekNum == 7, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(ga_allws_nochn_all), aes(Date, Sessions), size = 0.5, col = "blue") +
+  theme_bw() +
+  coord_cartesian(xlim = as.Date(c("2016-02-01", "2016-03-31")), ylim = c(0, 6100))
+```
+
+```{r echo=FALSE, fig.width=10}
+ggplot(ga_allws_nochn_all, aes(Date, Sessions)) +
+  geom_vline(xintercept = daysinfo[weekNum == 7, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(ga_allws_nochn_all), aes(Date, Sessions), size = 0.5, col = "blue") +
+  theme_bw() +
+  coord_cartesian(xlim = as.Date(c("2017-04-01", "2017-05-31")), ylim = c(0, 6100))
+```
+
+```{r echo=FALSE, fig.width=10}
+ggplot(ga_allws_nochn_all, aes(Date, Sessions)) +
+  geom_vline(xintercept = daysinfo[weekNum == 7, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(ga_allws_nochn_all), aes(Date, Sessions), size = 0.5, col = "blue") +
+  theme_bw() +
+  coord_cartesian(xlim = as.Date(c("2018-01-01", "2018-02-28")), ylim = c(0, 8300))
+```
+
+When usinf filter, the data available from GA starts between August 2 to 4
+
+```{r echo=FALSE, fig.width=10, fig.height=3}
+ggplot(ga_allws_nochn_es, aes(Date, Sessions)) +
+  geom_vline(xintercept = daysinfo[weekNum == 7, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(ga_allws_nochn_es), aes(Date, Sessions), size = 0.5, col = "blue") +
+  theme_bw() +
+  coord_cartesian(xlim = as.Date(c("2016-07-20", "2016-08-15")), ylim = c(0, 1700))
+```
+
+```{r echo=FALSE, fig.width=10, fig.height=3}
+gametric <- completeGADates(ga_engws_chn_es[Channel == "Organic Search"], limitDates = lim)
+ggplot(gametric, aes(Date, Users)) +
+  geom_vline(xintercept = daysinfo[weekNum == 7, Date], col = "lightblue", lty = 2) +
+  geom_line(stat = "identity", size = 0.25) +
+  geom_line(data = trendValues(gametric), aes(Date, Users), size = 0.5, col = "blue") +
+  theme_bw() +
+  coord_cartesian(xlim = as.Date(c("2016-07-20", "2016-08-15")), ylim = c(0, 100))
+```
