@@ -126,8 +126,6 @@ metricidx <- 3
 # 12 AvgTimeOnPage
 ```
 
-# Art, Spain, Organic Search, Sessions
-
 # By Year
 
 ### 2016
@@ -137,11 +135,11 @@ teststart <- "2016-08-04"
 testend <- "2016-12-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -151,34 +149,33 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-01-01") - 21
-#teststart <- "2017-01-01"
+teststart <- "2017-01-01"
 testend <- "2017-12-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 2)
+                    dlag = 1)
 ```
 
 ### 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-01-01") - 21
+teststart <- "2018-01-01"
 testend <- "2018-06-24"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -190,51 +187,51 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Autumn 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-09-01") - 21
+teststart <- "2016-08-17"
 testend <- "2016-11-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 10)
+                    dlag = 8)
 ```
 
 ### Winter 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-12-01") - 21
+teststart <- "2016-11-16"
 testend <- "2017-02-28"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 0)
+                    dlag = 1)
 ```
 
 ### Spring 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-03-01") - 21
+teststart <- "2017-02-14"
 testend <- "2017-05-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -244,33 +241,33 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Summer 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-06-01") - 21
+teststart <- "2017-05-17"
 testend <- "2017-08-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 5)
+                    dlag = 6)
 ```
 
 ### Autumn 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-09-01") - 21
+teststart <- "2017-08-17"
 testend <- "2017-11-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -280,15 +277,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Winter 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-12-01") - 21
+teststart <- "2017-11-16"
 testend <- "2018-02-28"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -298,15 +295,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Spring 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-03-01") - 21
+teststart <- "2018-02-14"
 testend <- "2018-05-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -316,15 +313,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Summer 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-06-01") - 21
+teststart <- "2018-05-17"
 testend <- "2018-06-24"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -340,36 +337,35 @@ https://www.elconfidencial.com/espana/madrid/2016-06-29/calendario-escolar-curso
 
 ### Summer break 2016
 
-No visitors registered during this period
 ```{r echo=FALSE, fig.width=10}
-teststart <- "2016-08-04"
-testend <- "2016-09-06"
-
-visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-#getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
-
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
-                    plotstart = teststart,
-                    plotend = testend,
-                    metric = metric,
-                    dlag = 0)
+# teststart <- "2016-08-04"
+# testend <- "2016-09-06"
+# 
+# visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+# gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# 
+# plotLagComparisonv2(trendValues(gamericdata),
+#                     trendValues(visitordata),
+#                     plotstart = teststart,
+#                     plotend = testend,
+#                     metric = metric,
+#                     dlag = 7)
 ```
 
 ### Christmas break 2016
 
 ```{r echo=FALSE, fig.width=10}
 #teststart <- "2016-12-23"
-teststart <- as.Date("2016-12-23") - 21
+teststart <- "2016-12-08"
 testend <- "2017-01-08"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -379,77 +375,77 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Easter break 2017
 
 ```{r echo=FALSE, fig.width=10}
-#teststart <- "2017-04-08"
-teststart <- as.Date("2017-04-08") - 21
-testend <- "2017-04-16"
-
-visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
-
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
-                    plotstart = teststart,
-                    plotend = testend,
-                    metric = metric,
-                    dlag = 1)
+# #teststart <- "2017-04-08"
+# teststart <- "2017-03-24"
+# testend <- "2017-04-16"
+# 
+# visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+# gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# 
+# plotLagComparisonv2(trendValues(gamericdata),
+#                     trendValues(visitordata),
+#                     plotstart = teststart,
+#                     plotend = testend,
+#                     metric = metric,
+#                     dlag = 7)
 ```
 
 ### Summer break 2017
 
 ```{r echo=FALSE, fig.width=10}
 #teststart <- "2017-06-09"
-teststart <- as.Date("2017-06-09") - 21
+teststart <- "2017-05-25"
 testend <- "2017-09-07"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 7)
+                    dlag = 15)
 ```
 
 ### Christmas break 2017
 
 ```{r echo=FALSE, fig.width=10}
 #teststart <- "2017-12-23"
-teststart <- as.Date("2017-12-23") - 21
+teststart <- "2017-12-08"
 testend <- "2018-01-07"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 3)
+                    dlag = 5)
 ```
 
 ### Easter break 2018
 
 ```{r echo=FALSE, fig.width=10}
-#teststart <- "2018-03-23"
-teststart <- as.Date("2018-03-23") - 21
-testend <- "2018-04-02"
-
-visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
-
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
-                    plotstart = teststart,
-                    plotend = testend,
-                    metric = metric,
-                    dlag = 0)
+# #teststart <- "2018-03-23"
+# teststart <- "2018-03-08"
+# testend <- "2018-04-02"
+# 
+# visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+# gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# 
+# plotLagComparisonv2(trendValues(gamericdata),
+#                     trendValues(visitordata),
+#                     plotstart = teststart,
+#                     plotend = testend,
+#                     metric = metric,
+#                     dlag = 7)
 ```
 
 
@@ -457,89 +453,89 @@ plotLagComparisonv2(movingAverage(gamericdata),
 
 ### August 2016
 
-No visitors registered during this period
+Visitor data has no data
 ```{r echo=FALSE, fig.width=10}
-teststart <- "2016-08-04"
-testend <- "2016-08-31"
-
-visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-# getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
-#
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
-                    plotstart = teststart,
-                    plotend = testend,
-                    metric = metric,
-                    dlag = 0)
+# teststart <- "2016-08-19"
+# testend <- "2016-08-31"
+# 
+# visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
+# gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# # getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+# # 
+# plotLagComparisonv2(trendValues(gamericdata),
+#                     trendValues(visitordata),
+#                     plotstart = teststart,
+#                     plotend = testend,
+#                     metric = metric,
+#                     dlag = 0)
 ```
 
 ### September 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-09-01") - 21
+teststart <- "2016-08-17"
 testend <- "2016-09-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 4)
+                    dlag = 8)
 ```
 
 ### October 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-10-01") - 21
+teststart <- "2016-09-16"
 testend <- "2016-10-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 0)
+                    dlag = 3)
 ```
 
 ### November 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-11-01") - 21
+teststart <- "2016-10-17"
 testend <- "2016-11-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 15)
+                    dlag = 11)
 ```
 
 ### December 2016
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2016-12-01") - 21
+teststart <- "2016-11-16"
 testend <- "2016-12-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -549,33 +545,33 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### January 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-01-01") - 21
+teststart <- "2016-12-17"
 testend <- "2017-01-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 3)
+                    dlag = 4)
 ```
 
 ### February 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-02-01") - 21
+teststart <- "2017-01-17"
 testend <- "2017-02-28"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -585,33 +581,33 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### March 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-03-01") - 21
+teststart <- "2017-02-14"
 testend <- "2017-03-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 8)
+                    dlag = 9)
 ```
 
 ### April 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-04-01") - 21
+teststart <- "2017-03-17"
 testend <- "2017-04-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -621,15 +617,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### May 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-05-01") - 21
+teststart <- "2017-04-16"
 testend <- "2017-05-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -639,15 +635,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### Jun 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-06-01") - 21
+teststart <- "2017-05-17"
 testend <- "2017-06-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -657,17 +653,17 @@ plotLagComparisonv2(movingAverage(gamericdata),
 
 ### July 2017
 
-No visitors registered during this period
+Visitor data has no data
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-07-01") - 21
+teststart <- "2017-06-16"
 testend <- "2017-07-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-# getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 # 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -676,17 +672,17 @@ plotLagComparisonv2(movingAverage(gamericdata),
 
 ### August 2017
 
-No visitors registered during this period
+Visitor data has no data
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-08-01") - 21
+teststart <- "2017-07-17"
 testend <- "2017-08-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-# getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+# getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 # 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -696,69 +692,69 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### September 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-09-01") - 21
+teststart <- "2017-08-17"
 testend <- "2017-09-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 1)
+                    dlag = 3)
 ```
 
 ### October 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-10-01") - 21
+teststart <- "2017-09-16"
 testend <- "2017-10-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 1)
+                    dlag = 2)
 ```
 
 ### November 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-11-01") - 21
+teststart <- "2017-10-17"
 testend <- "2017-11-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 12)
+                    dlag = 0)
 ```
 
 ### December 2017
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2017-12-01") - 21
+teststart <- "2017-11-16"
 testend <- "2017-12-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -768,15 +764,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### January 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-01-01") - 21
+teststart <- "2017-12-17"
 testend <- "2018-01-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -786,15 +782,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### February 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-02-01") - 21
+teststart <- "2018-01-17"
 testend <- "2018-02-28"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -804,15 +800,15 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### March 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-03-01") - 21
+teststart <- "2018-02-14"
 testend <- "2018-03-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
@@ -822,51 +818,51 @@ plotLagComparisonv2(movingAverage(gamericdata),
 ### April 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-04-01") - 21
+teststart <- "2018-03-17"
 testend <- "2018-04-30"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 3)
+                    dlag = 9)
 ```
 
 ### May 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-05-01") - 21
+teststart <- "2018-04-16"
 testend <- "2018-05-31"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,
-                    dlag = 10)
+                    dlag = 15)
 ```
 
 ### June 2018
 
 ```{r echo=FALSE, fig.width=10}
-teststart <- as.Date("2018-06-01") - 21
+teststart <- "2018-05-17"
 testend <- "2018-06-24"
 
 visitordata <- fjm_visitors[Date >= as.Date(teststart) + maxlag & Date <= testend]
-gamericdata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
-getMaxCorrelations(getCorrelationMatrixv2(movingAverage(gamericdata), movingAverage(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
+gamericdata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= as.Date(testend)]
+getMaxCorrelations(getCorrelationMatrixv2(trendValues(gamericdata), trendValues(visitordata), maxlag = maxlag))[metricidx,]  # 3 Sessions
 
-plotLagComparisonv2(movingAverage(gamericdata),
-                    movingAverage(visitordata),
+plotLagComparisonv2(trendValues(gamericdata),
+                    trendValues(visitordata),
                     plotstart = teststart,
                     plotend = testend,
                     metric = metric,

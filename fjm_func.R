@@ -205,7 +205,10 @@ getCorrelationMatrixv2 <- function(gametrics, visitors, maxlag = 31) {
     for (j in 1:12) { # For each metric
       # Get correlation
       # corrvals[j] <- round(cor(gametrics[, get(as.character(corrdf[j, 1]))], visitors[Date >= dmin + i & Date <= dmax + i, visitors]), 3)
-      corrvals[j] <- round(cor(visitors[, visitors], gametrics[Date >= dmin - i & Date <= dmax - i, get(as.character(corrdf[j, 1]))]), 3)
+      if (var(gametrics[Date >= dmin - i & Date <= dmax - i, get(as.character(corrdf[j, 1]))]) == 0 | var(visitors[, visitors]) == 0)
+        corrvals[j] <- 0
+      else
+        corrvals[j] <- round(cor(visitors[, visitors], gametrics[Date >= dmin - i & Date <= dmax - i, get(as.character(corrdf[j, 1]))]), 3)
     }
     corrcolnames <- cbind(corrcolnames, paste("Lag", i, sep = "_"))  # Add column name with lag number
     corrdf <- cbind(corrdf, corrvals)                                # Add results to dataframe
@@ -271,34 +274,34 @@ getMaxCorrelationsTable <- function(gametrics, visitors, tptype, maxlag = 31, to
   } else
     ans <- cbind(ans, 0, 0)
   #
-  # 7) GA Trend - Visitors Unchanged
-  co <- getCorrelationMatrix(trendValues(gametrics), visitors, maxlag = maxlag)
-  comax <- getMaxCorrelations(co)
-  ans <- cbind(ans, comax[, 2:3])
-  #
-  # 8) GA Trend Log - Visitors
-  if (canApplyLog(gametrics)) {
-    co <- getCorrelationMatrix(trendValues(logValues(gametrics)), visitors, maxlag = maxlag)
-    comax <- getMaxCorrelations(co)
-    ans <- cbind(ans, comax[, 2:3])
-  } else
-    ans <- cbind(ans, 0, 0)
-  #
-  # 9) GA Trend - Visitors Trend
-  co <- getCorrelationMatrix(trendValues(gametrics), trendValues(visitors), maxlag = maxlag)
-  comax <- getMaxCorrelations(co)
-  ans <- cbind(ans, comax[, 2:3])
-  #
-  # 10) GA Trend Log - Visitors Trend
-  if (canApplyLog(gametrics)) {
-    co <- getCorrelationMatrix(trendValues(logValues(gametrics)), trendValues(visitors), maxlag = maxlag)
-    comax <- getMaxCorrelations(co)
-    ans <- cbind(ans, comax[, 2:3])
-  } else
-    ans <- cbind(ans, 0, 0)
+  # # 7) GA Trend - Visitors Unchanged
+  # co <- getCorrelationMatrix(trendValues(gametrics), visitors, maxlag = maxlag)
+  # comax <- getMaxCorrelations(co)
+  # ans <- cbind(ans, comax[, 2:3])
+  # #
+  # # 8) GA Trend Log - Visitors
+  # if (canApplyLog(gametrics)) {
+  #   co <- getCorrelationMatrix(trendValues(logValues(gametrics)), visitors, maxlag = maxlag)
+  #   comax <- getMaxCorrelations(co)
+  #   ans <- cbind(ans, comax[, 2:3])
+  # } else
+  #   ans <- cbind(ans, 0, 0)
+  # #
+  # # 9) GA Trend - Visitors Trend
+  # co <- getCorrelationMatrix(trendValues(gametrics), trendValues(visitors), maxlag = maxlag)
+  # comax <- getMaxCorrelations(co)
+  # ans <- cbind(ans, comax[, 2:3])
+  # #
+  # # 10) GA Trend Log - Visitors Trend
+  # if (canApplyLog(gametrics)) {
+  #   co <- getCorrelationMatrix(trendValues(logValues(gametrics)), trendValues(visitors), maxlag = maxlag)
+  #   comax <- getMaxCorrelations(co)
+  #   ans <- cbind(ans, comax[, 2:3])
+  # } else
+  #   ans <- cbind(ans, 0, 0)
   #
   # Change names
-  names(ans) <- c("Type", "Metrics", paste(c("MaxCorr", "Lag"), rep(1:10, each = 2), sep = ""))
+  names(ans) <- c("Type", "Metrics", paste(c("MaxCorr", "Lag"), rep(1:6, each = 2), sep = ""))
   # Max values
   # ans <- rbind(ans,
   #              c(c(Type = tptype, Metrics ="MaxIndex"), apply(ans[, -(1:2)], 2, which.max)),

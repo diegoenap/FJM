@@ -621,16 +621,22 @@ fwrite(res, file = "output/correlations_musica.csv")
 fwrite(getBestCorrelations(res), file = "output/best_correlations_musica.csv")
 
 
-plotLagComparisonv2(movingAverage(ga_allws_chn_us[Channel == "Organic Search"]),
+plotLagComparisonv2(movingAverage(ga_arte_chn_es[Channel == "Organic Search"]),
                     movingAverage(visitordata),
-                    plotstart = "2017-06-15",
-                    plotend = "2017-12-31",
-                    metric = "UniquePageviews",
-                    dlag = 1)
+                    plotstart = "2016-08-04",
+                    plotend = "2018-06-24",
+                    metric = "SessionsOld")
+                    #dlag = 0)
 
-plotLagComparisonv2(ga_allws_chn_us[Channel == "Organic Search"],
+
+plotLagComparisonSameScale(movingAverage(ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]),
+                           movingAverage(visitordata),
+                           metric = "SessionsOld",
+                           dlag = 0)
+
+plotLagComparisonv2(ga_arte_chn_es[Channel == "Organic Search"],
                     visitordata,
-                    plotstart = "2017-06-15",
-                    plotend = "2017-12-31",
-                    metric = "UniquePageviews",
-                    dlag = 1)
+                    plotstart = "2016-08-04",
+                    plotend = "2018-06-24",
+                    metric = "SessionsOld",
+                    dlag = 0)

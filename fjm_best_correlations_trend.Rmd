@@ -1,5 +1,5 @@
 ---
-title: "Fundacion Juan March - Best Correlations"
+title: "Fundacion Juan March - Bet Correlations"
 author: "Diego Enriquez"
 date: "4/10/2018"
 output: html_document
@@ -112,27 +112,31 @@ maxlag <- 31
 
 # Art
 
-#### Spain, Organic Search, Sessions, corr: 0.904
+#### Locals, Organic Search, Sessions, corr: 0.905
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
 testend <- "2018-05-24"
 visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-gadata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
+gadata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "Sessions"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
+
+
+
+
 
 #### Without moving average
 
@@ -147,13 +151,13 @@ plotLagComparisonSameScale(movingAverage(gadata),
 #                     dlag = 0)
 ```
 
-#### Locals, Organic Search, Sessions, corr: 0.904
+#### Spain, Organic Search, SessionsNew, corr: 0.904
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
 testend <- "2018-05-24"
 visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-gadata <- ga_arte_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= testend]
+gadata <- ga_arte_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "Sessions"
 dlag <- 0
 plotLagComparison(movingAverage(gadata),
@@ -189,17 +193,6 @@ plotLagComparisonSameScale(movingAverage(gadata),
                            movingAverage(visitordata),
                            metric = metric,
                            dlag = dlag)
-```
-
-```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-teststart <- "2016-01-01"  # Values for Full Data
-testend <- "2018-05-24"
-maxlag <- 31
-visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-plotCorrelations(getCorrelationMatrix(gametrics = movingAverage(ga_arte_nochn_all[Date >= teststart & Date <= testend]),
-                                      visitors = movingAverage(visitordata)),
-                 select = "SessionsOld",
-                 plottitle = "")
 ```
 
 # All Website
@@ -248,31 +241,31 @@ plotLagComparisonSameScale(movingAverage(gadata),
                            dlag = dlag)
 ```
 
-#### All locations, Organic Search, SessionsOld, corr: 0.800
+#### Spain, Direct, SessionsOld, corr: 0.802
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
 testend <- "2018-05-24"
 visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-gadata <- ga_allws_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
+gadata <- ga_allws_chn_es[Channel == "Direct" & Date >= teststart & Date <= testend]
 metric <- "SessionsOld"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
 # Lectures
 
-#### Spain, Organic Search, SessionsOld, corr: 0.748
+#### Spain, Organic Search, SessionsOld, corr: 0.751
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -281,42 +274,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_conferencias_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "SessionsOld"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### Spain, Direct, UsersOld, corr: 0.721
-
-```{r echo=FALSE, fig.width=10, warning=FALSE}
-teststart <- "2016-08-04"  # Values for Full Data
-testend <- "2018-05-24"
-visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-gadata <- ga_conferencias_chn_es[Channel == "Direct" & Date >= teststart & Date <= testend]
-metric <- "UsersOld"
-dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
-                  metric = metric,
-                  dlag = dlag)
-```
-
-```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
-                           metric = metric,
-                           dlag = dlag)
-```
-
-#### Domestic, Organic Search, SessionsNoBounce, corr: 0.723
+#### Domestic, Organic Search, SessionsNoBounce, corr: 0.727
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -325,22 +296,44 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_conferencias_chn_do[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "SessionsNoBounce"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
+                           metric = metric,
+                           dlag = dlag)
+```
+
+#### Spain, Direct, UsersOld, corr: 0.723
+
+```{r echo=FALSE, fig.width=10, warning=FALSE}
+teststart <- "2016-08-04"  # Values for Full Data
+testend <- "2018-05-24"
+visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
+gadata <- ga_conferencias_chn_es[Channel == "Direct" & Date >= teststart & Date <= testend]
+metric <- "UsersOld"
+dlag <- 0
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
+                  metric = metric,
+                  dlag = dlag)
+```
+
+```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
 # English Website
 
-#### All locations, All channels, SessionsBounce, corr: 0.701
+#### All locations, All channels, SessionsBounce, corr: 0.704
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-01-01"  # Values for Full Data
@@ -349,20 +342,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_engws_nochn_all[Date >= teststart & Date <= testend]
 metric <- "SessionsBounce"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### All locations, Organic Search, SessionsBounce, corr: 0.689
+#### All locations, Organic Search, SessionsBounce, corr: 0.691
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-01-01"  # Values for Full Data
@@ -371,20 +364,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_engws_chn_all[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "SessionsBounce"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### Locals, All channels, SessionsBounce, corr: 0.550
+#### Locals, All channels, SessionsBounce, corr: 0.551
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -392,23 +385,23 @@ testend <- "2018-05-24"
 visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
 gadata <- ga_engws_nochn_lo[Date >= teststart & Date <= testend]
 metric <- "SessionsBounce"
-dlag <- 15
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+dlag <- 16
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
 # Music
 
-#### Locals, Organic Search, Users, corr: 0.700
+#### Locals, Organic Search, Users, corr: 0.703
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -417,20 +410,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_musica_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "Users"
 dlag <- 1
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### Spain, Organic Search, UsersOld, corr: 0.690
+#### Spain, Organic Search, UsersOld, corr: 0.694
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -439,44 +432,44 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_musica_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "UsersOld"
 dlag <- 1
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### All locations, All channels, SessionsOld, corr: 0.685
+#### Locals, Direct, UsersOld, corr: 0.688
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
-teststart <- "2016-01-01"  # Values for Full Data
+teststart <- "2016-08-04"  # Values for Full Data
 testend <- "2018-05-24"
 visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxlag]
-gadata <- ga_musica_nochn_all[Date >= teststart & Date <= testend]
-metric <- "SessionsOld"
+gadata <- ga_musica_chn_lo[Channel == "Direct" & Date >= teststart & Date <= testend]
+metric <- "UsersOld"
 dlag <- 2
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
 # Library
 
-#### Spain, Organic Search, UsersOld, corr: 0.643
+#### Spain, Organic Search, UsersOld, corr: 0.653
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -485,20 +478,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_bibliotecas_chn_es[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "UsersOld"
 dlag <- 2
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### Locals, Organic Search, Users, corr: 0.612
+#### Locals, Organic Search, Users, corr: 0.622
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -507,20 +500,20 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_bibliotecas_chn_lo[Channel == "Organic Search" & Date >= teststart & Date <= testend]
 metric <- "Users"
 dlag <- 0
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
 
-#### Spain, Direct, Users, corr: 0.583
+#### Spain, Direct, Users, corr: 0.592
 
 ```{r echo=FALSE, fig.width=10, warning=FALSE}
 teststart <- "2016-08-04"  # Values for Full Data
@@ -529,15 +522,15 @@ visitordata <- fjm_visitors[Date >= teststart & Date <= as.Date(testend) + maxla
 gadata <- ga_bibliotecas_chn_es[Channel == "Direct" & Date >= teststart & Date <= testend]
 metric <- "Users"
 dlag <- 2
-plotLagComparison(movingAverage(gadata),
-                  movingAverage(visitordata),
+plotLagComparison(trendValues(gadata),
+                  trendValues(visitordata),
                   metric = metric,
                   dlag = dlag)
 ```
 
 ```{r echo=FALSE, fig.width=10, fig.height=2.5, warning=FALSE}
-plotLagComparisonSameScale(movingAverage(gadata),
-                           movingAverage(visitordata),
+plotLagComparisonSameScale(trendValues(gadata),
+                           trendValues(visitordata),
                            metric = metric,
                            dlag = dlag)
 ```
